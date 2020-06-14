@@ -1,4 +1,4 @@
-describe('Testing jest', () => {
+describe('Create user', () => {
   it('Sum this two numbers', () => {
     const a = 2
     const b = 3
