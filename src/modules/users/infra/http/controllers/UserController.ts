@@ -1,9 +1,9 @@
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 
 class UserController {
   public async store(request: Request, response: Response): Promise<Response> {
-    return response.json({ hello: 'world' })
+    return response.json({ hello: 'world' });
   }
 }
 
-export default UserController
+export default UserController;
