@@ -26,11 +26,11 @@ class CreateUserService {
     password,
   }: IRequest): Promise<User> {
     const checkEmailExists = await this.usersRepository.findByEmail(email);
-    // const checkUsernameExists = await this.usersRepository.findByUsername(
-    //   username
-    // );
+    const checkUsernameExists = await this.usersRepository.findByUsername(
+      username
+    );
 
-    if (checkEmailExists) {
+    if (checkEmailExists || checkUsernameExists) {
       throw new AppError('Username or email already exists');
     }
 
