@@ -12,7 +12,7 @@ describe('CreateUser', () => {
   });
 
   it('should be able to create a new user', async () => {
-    const user = await fakeUsersRepository.create({
+    const user = await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
       username: '@johndoe',
