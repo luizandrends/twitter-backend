@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 
 import IUsersRepository from '../repositories/IUsersRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   name: string;
@@ -16,7 +17,10 @@ interface IRequest {
 class CreateUserService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider
   ) {}
 
   public async execute({
@@ -34,11 +38,13 @@ class CreateUserService {
       throw new AppError('Username or email already exists');
     }
 
+    const hashedPassword = await this.hashProvider.generateHash(password);
+
     const user = this.usersRepository.create({
       name,
       email,
       username,
-      password,
+      password: hashedPassword,
     });
 
     return user;
