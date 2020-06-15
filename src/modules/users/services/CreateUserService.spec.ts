@@ -37,4 +37,25 @@ describe('CreateUser', () => {
       })
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('sould not be able to create a new user with a repeated username', async () => {
+    const fakeUsersRepository = new FakeUsersRepository();
+    const createUser = new CreateUserService(fakeUsersRepository);
+
+    await createUser.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      username: '@johndoe',
+      password: '1234',
+    });
+
+    await expect(
+      createUser.execute({
+        name: 'John Doe',
+        email: 'johndoe@gmail.com',
+        username: '@johndoe',
+        password: '1234',
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });

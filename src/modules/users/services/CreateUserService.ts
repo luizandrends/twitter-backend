@@ -26,9 +26,12 @@ class CreateUserService {
     password,
   }: IRequest): Promise<User> {
     const checkEmailExists = await this.usersRepository.findByEmail(email);
+    // const checkUsernameExists = await this.usersRepository.findByUsername(
+    //   username
+    // );
 
     if (checkEmailExists) {
-      throw new AppError('Email already exists');
+      throw new AppError('Username or email already exists');
     }
 
     const user = this.usersRepository.create({
