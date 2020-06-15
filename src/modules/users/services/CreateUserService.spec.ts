@@ -1,5 +1,5 @@
-import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository'
-import CreateUserService from '../services/CreateUserService'
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import CreateUserService from './CreateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let createUser: CreateUserService;
@@ -9,16 +9,16 @@ describe('CreateUser', () => {
     fakeUsersRepository = new FakeUsersRepository();
 
     createUser = new CreateUserService(fakeUsersRepository);
-  })
+  });
 
   it('should be able to create a new user', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       username: '@johndoe',
-      password: '1234'
-    })
+      password: '1234',
+    });
 
-    expect(user).toHaveProperty('id')
-  })
-})
+    expect(user).toHaveProperty('id');
+  });
+});
