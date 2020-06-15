@@ -1,10 +1,9 @@
 import 'reflect-metadata';
+import '@shared/infra/typeorm';
+import '@shared/container';
 
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
-
-import '@shared/infra/typeorm';
-import '@shared/container';
 import routes from '@shared/infra/http/routes';
 import AppError from '@shared/errors/AppError';
 
@@ -23,7 +22,7 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
 
   return response.status(500).json({
     status: 'error',
-    message: 'internal server erro',
+    message: 'internal server error',
   });
 });
 

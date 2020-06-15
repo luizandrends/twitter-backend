@@ -29,6 +29,10 @@ export default class CreateUsersTable1592186425242
             isUnique: true,
           },
           {
+            name: 'password',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
@@ -41,6 +45,7 @@ export default class CreateUsersTable1592186425242
           {
             name: 'deleted_at',
             type: 'timestamp',
+            isNullable: true,
             default: null,
           },
         ],

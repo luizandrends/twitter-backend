@@ -8,7 +8,6 @@ class UserController {
     const { name, email, username, password } = request.body;
 
     const createUser = container.resolve(CreateUserService);
-
     const user = await createUser.execute({
       name,
       email,
