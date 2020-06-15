@@ -1,5 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
+import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 
 import IUsersRepository from '../repositories/IUsersRepository';
@@ -24,6 +25,12 @@ class CreateUserService {
     username,
     password,
   }: IRequest): Promise<User> {
+    const checkEmailExists = await this.usersRepository.findByEmail(email);
+
+    if (checkEmailExists) {
+      throw new AppError('Email already exists');
+    }
+
     const user = this.usersRepository.create({
       name,
       email,
