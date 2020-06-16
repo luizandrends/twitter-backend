@@ -8,7 +8,8 @@ import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   user_id: string;
-  avatarFilename: string;
+  name: string;
+  path: string;
 }
 
 @injectable()
@@ -21,20 +22,22 @@ class UpdateUserAvatarService {
     private storageProvider: IStorageProvider
   ) {}
 
-  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
+  public async execute({ user_id, name, path }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('Only authenticated user can change avatar', 401);
+      throw new AppError('You cant update the avatar of an unexistent user');
     }
 
-    if (user.avatar) {
-      await this.storageProvider.deleteFile(user.avatar);
+    const avatarId = user.avatar_id;
+
+    if (avatarId) {
+      await this.storageProvider.deleteFile(avatarId);
     }
 
-    const filename = await this.storageProvider.saveFile(avatarFilename);
+    const createFile = await this.storageProvider.saveFile(name, path);
 
-    user.avatar = filename;
+    user.avatar_id = createFile.id;
 
     await this.usersRepository.save(user);
 

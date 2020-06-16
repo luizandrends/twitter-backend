@@ -1,16 +1,36 @@
 import fs from 'fs';
 import path from 'path';
 
+import { getRepository, Repository } from 'typeorm';
+
 import uploadConfig from '@config/upload';
 
 import IStorageProvider from '../models/IStorageProvider';
+import File from '../typeorm/entities/File';
+
+interface IFile {
+  fileName: string;
+  filePath: string;
+}
 
 class DiskStorageProvider implements IStorageProvider {
-  public async saveFile(file: string): Promise<string> {
+  private ormRepository: Repository<File>;
+
+  constructor() {
+    this.ormRepository = getRepository(File);
+  }
+
+  public async saveFile(fileName: string, filePath: string): Promise<File> {
     await fs.promises.rename(
-      path.resolve(uploadConfig.tmpFolder, file),
-      path.resolve(uploadConfig.uploadsFolder, file)
+      path.resolve(uploadConfig.tmpFolder, fileName),
+      path.resolve(uploadConfig.uploadsFolder, fileName)
     );
+
+    const file = await this.ormRepository.create({
+      name: fileName,
+      path: filePath,
+      url: `http://localhost:3333/${fileName}`,
+    });
 
     return file;
   }

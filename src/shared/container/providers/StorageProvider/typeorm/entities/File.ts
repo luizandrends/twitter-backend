@@ -5,14 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToOne,
-  JoinColumn,
 } from 'typeorm';
 
-import File from '@shared/container/providers/StorageProvider/typeorm/entities/File';
-
-@Entity('users')
-class User {
+@Entity('files')
+class File {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,20 +16,10 @@ class User {
   name: string;
 
   @Column()
-  email: string;
+  path: string;
 
   @Column()
-  username: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  avatar_id: string;
-
-  @OneToOne(() => File)
-  @JoinColumn({ name: 'avatar_id' })
-  avatar: File;
+  url: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -45,4 +31,4 @@ class User {
   deleted_at: Date;
 }
 
-export default User;
+export default File;
