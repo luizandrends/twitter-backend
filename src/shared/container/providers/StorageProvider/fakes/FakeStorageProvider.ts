@@ -15,7 +15,11 @@ class FakeStorageProvider implements IStorageProvider {
 
     const file = new File();
 
-    Object.assign(file, { id: uuid() }, originalname, filename, url);
+    Object.assign(
+      file,
+      { id: uuid(), name: originalname, path: filename },
+      url
+    );
 
     return file;
   }
