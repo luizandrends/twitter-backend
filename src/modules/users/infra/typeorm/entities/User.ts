@@ -5,11 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToOne,
-  JoinColumn,
 } from 'typeorm';
-
-import File from '@shared/container/providers/StorageProvider/typeorm/entities/File';
 
 @Entity('users')
 class User {
@@ -30,10 +26,6 @@ class User {
 
   @Column()
   avatar_id: string;
-
-  @OneToOne(() => File)
-  @JoinColumn({ name: 'avatar_id' })
-  avatar: File;
 
   @CreateDateColumn()
   created_at: Date;
