@@ -9,7 +9,8 @@ class FakeStorageProvider implements IStorageProvider {
 
   public async saveFile(
     originalname: string,
-    filename: string
+    filename: string,
+    user_id: string
   ): Promise<File | undefined> {
     const url = `http://localhost:3333/${originalname}`;
 
@@ -18,7 +19,8 @@ class FakeStorageProvider implements IStorageProvider {
     Object.assign(
       file,
       { id: uuid(), name: originalname, path: filename },
-      url
+      url,
+      user_id
     );
 
     return file;

@@ -13,7 +13,8 @@ class StorageProvider implements IStorageProvider {
 
   public async saveFile(
     originalname: string,
-    filename: string
+    filename: string,
+    user_id: string
   ): Promise<File | undefined> {
     const url = `http://localhost:3333/users/avatar/${filename}`;
 
@@ -21,6 +22,7 @@ class StorageProvider implements IStorageProvider {
       name: originalname,
       path: filename,
       url,
+      user_id,
     });
 
     await this.ormRepository.save(file);

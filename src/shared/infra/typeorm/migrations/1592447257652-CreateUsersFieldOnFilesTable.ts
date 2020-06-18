@@ -24,7 +24,7 @@ export default class CreateUsersFieldOnFilesTable1592447257652
         name: 'FileUser',
         columnNames: ['user_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'files',
+        referencedTableName: 'users',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       })

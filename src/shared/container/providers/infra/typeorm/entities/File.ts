@@ -21,6 +21,9 @@ class File {
   @Column()
   url: string;
 
+  @Column()
+  user_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 
