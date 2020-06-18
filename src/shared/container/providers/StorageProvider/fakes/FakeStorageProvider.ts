@@ -23,14 +23,6 @@ class FakeStorageProvider implements IStorageProvider {
 
     return file;
   }
-
-  public async deleteFile(id: string): Promise<void> {
-    const findIndex = this.storage.findIndex(
-      storageFile => storageFile.id === id
-    );
-
-    this.storage.splice(findIndex, 1);
-  }
 }
 
 export default FakeStorageProvider;

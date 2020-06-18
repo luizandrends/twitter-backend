@@ -26,7 +26,7 @@ class CreateUserService {
     filename,
     user_id,
   }: IRequest): Promise<File | undefined> {
-    const user = this.usersRepository.findById(user_id);
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('You cannot update the avatar of an unexistent user');

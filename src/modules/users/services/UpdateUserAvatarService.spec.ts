@@ -45,7 +45,7 @@ describe('UpdateAvatar', () => {
     expect(avatar?.name).toBe('originalname.jpg');
   });
 
-  it('sould not be able to update a avatar from an unexistent user', async () => {
+  it('should not be able to update a avatar from an unexistent user', async () => {
     expect(
       updateAvatar.execute({
         originalname: 'originalname.jpg',
