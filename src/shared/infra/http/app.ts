@@ -1,9 +1,11 @@
 import 'reflect-metadata';
 import '@shared/infra/typeorm';
 import '@shared/container';
+import 'express-async-errors';
 
 import express, { Request, Response, NextFunction } from 'express';
-import 'express-async-errors';
+import path from 'path';
+
 import routes from '@shared/infra/http/routes';
 import AppError from '@shared/errors/AppError';
 
@@ -20,6 +22,10 @@ class App {
 
   private middlewares(): void {
     this.express.use(express.json());
+    this.express.use(
+      '/users/avatar',
+      express.static(path.resolve(__dirname, '..', '..', '..', '..', 'tmp'))
+    );
   }
 
   private routes(): void {

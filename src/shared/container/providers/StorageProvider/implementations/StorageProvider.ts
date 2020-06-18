@@ -15,7 +15,7 @@ class StorageProvider implements IStorageProvider {
     originalname: string,
     filename: string
   ): Promise<File | undefined> {
-    const url = `http://localhost:3333/${originalname}`;
+    const url = `http://localhost:3333/users/avatar/${filename}`;
 
     const file = await this.ormRepository.create({
       name: originalname,
