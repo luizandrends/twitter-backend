@@ -27,14 +27,6 @@ class StorageProvider implements IStorageProvider {
 
     return file;
   }
-
-  public async deleteFile(id: string): Promise<void> {
-    const file = await this.ormRepository.findOne({
-      where: { id },
-    });
-
-    console.log(file);
-  }
 }
 
 export default StorageProvider;
