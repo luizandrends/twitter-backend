@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 @injectable()
-class UpdateUserAvatarService {
+class UpdateUserBackgroundService {
   constructor(
     @inject('StorageProvider')
     private storageProvider: IStorageProvider,
@@ -29,7 +29,9 @@ class UpdateUserAvatarService {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('You cannot update the avatar of an unexistent user');
+      throw new AppError(
+        'You cannot update the background of an unexistent user'
+      );
     }
 
     const file = await this.storageProvider.saveFile(
@@ -38,7 +40,7 @@ class UpdateUserAvatarService {
       user_id
     );
 
-    user.avatar_id = file?.id as string;
+    user.background_id = file?.id as string;
 
     this.usersRepository.save(user);
 
@@ -46,4 +48,4 @@ class UpdateUserAvatarService {
   }
 }
 
-export default UpdateUserAvatarService;
+export default UpdateUserBackgroundService;
