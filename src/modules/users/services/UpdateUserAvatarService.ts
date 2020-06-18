@@ -28,11 +28,19 @@ class CreateUserService {
   }: IRequest): Promise<File | undefined> {
     const user = await this.usersRepository.findById(user_id);
 
+    console.log(user);
+
     if (!user) {
       throw new AppError('You cannot update the avatar of an unexistent user');
     }
 
     const file = await this.storageProvider.saveFile(originalname, filename);
+
+    const file_id = file.id;
+
+    user.avatar_id = file_id;
+
+    this.usersRepository.save(user);
 
     return file;
   }

@@ -13,6 +13,7 @@ class UpdateUserAvatarController {
       const avatar = await updateAvatar.execute({
         originalname: name,
         filename: path,
+        user_id: request.user.id,
       });
 
       return response.json(avatar);
