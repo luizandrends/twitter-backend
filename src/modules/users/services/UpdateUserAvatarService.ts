@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
-import File from '@shared/container/providers/StorageProvider/typeorm/entities/File';
+import File from '@shared/container/providers/infra/typeorm/entities/File';
 
 interface IRequest {
   originalname: string;
