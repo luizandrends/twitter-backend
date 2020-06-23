@@ -2,6 +2,7 @@ import { uuid } from 'uuidv4';
 
 import UserToken from '../../infra/typeorm/entities/UserToken';
 import TokenBlacklist from '../../infra/typeorm/entities/TokenBlacklist';
+
 import IUsersTokenRepository from '../IUserTokensRepository';
 
 class FakeUserTokensRepository implements IUsersTokenRepository {
@@ -43,6 +44,16 @@ class FakeUserTokensRepository implements IUsersTokenRepository {
     });
 
     this.blacklist.push(blacklist);
+  }
+
+  public async findTokenOnBlacklist(
+    token_id: string
+  ): Promise<TokenBlacklist | undefined> {
+    const findToken = this.blacklist.find(
+      blackListToken => blackListToken.token_id === token_id
+    );
+
+    return findToken;
   }
 }
 
