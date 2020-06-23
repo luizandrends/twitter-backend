@@ -90,4 +90,34 @@ describe('ResetPasswordService', () => {
       })
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should be able to store the token in the blacklist after the password recovery', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      username: '@johndoe',
+      password: '123456',
+    });
+
+    const { token, id: token_id } = await fakeUserTokensRepository.generate(
+      user.id
+    );
+
+    const generateHash = jest.spyOn(fakeHashProvider, 'generateHash');
+    const storeTokenOnBlacklist = jest.spyOn(
+      fakeUserTokensRepository,
+      'storeTokenOnBlacklist'
+    );
+
+    await resetPassword.execute({
+      password: '123123',
+      token,
+    });
+
+    const updatedUser = await fakeUsersRepository.findById(user.id);
+
+    expect(generateHash).toHaveBeenCalledWith('123123');
+    expect(storeTokenOnBlacklist).toHaveBeenCalledWith(token_id);
+    expect(updatedUser?.password).toBe('123123');
+  });
 });
