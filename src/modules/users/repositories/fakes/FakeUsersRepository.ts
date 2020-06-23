@@ -43,6 +43,12 @@ class UserRepository implements IUsersRepository {
 
     return user;
   }
+
+  public async delete(user_id: string): Promise<void> {
+    const findIndex = this.users.findIndex(findUser => findUser.id === user_id);
+
+    this.users[findIndex].deleted_at = new Date();
+  }
 }
 
 export default UserRepository;
