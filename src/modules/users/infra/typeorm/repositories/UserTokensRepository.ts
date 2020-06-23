@@ -30,6 +30,8 @@ class UserTokensRepository implements IUserTokensRepository {
 
     return userToken;
   }
+
+  public async storeTokenOnBlacklist(token_id: string): Promise<void> {}
 }
 
 export default UserTokensRepository;
