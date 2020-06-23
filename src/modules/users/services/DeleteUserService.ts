@@ -15,9 +15,9 @@ class DeleteUserService {
   ) {}
 
   public async execute(user_id: string, password: string): Promise<void> {
-    const findUser = await this.usersRepository.findById(user_id);
+    const user = await this.usersRepository.findById(user_id);
 
-    if (!findUser) {
+    if (!user) {
       throw new AppError('You cannot delete an unexistent user', 400);
     }
 
@@ -30,14 +30,16 @@ class DeleteUserService {
 
     const passwordMatch = await this.hashProvider.compareHash(
       password,
-      findUser.password
+      user.password
     );
 
     if (!passwordMatch) {
       throw new AppError('Wrong password', 401);
     }
 
-    await this.usersRepository.delete(user_id);
+    user.deleted_at = new Date();
+
+    await this.usersRepository.save(user);
   }
 }
 
