@@ -5,22 +5,15 @@ import SendForgotPasswordEmailService from '@modules/users/services/SendForgotPa
 
 class ForgotPasswordController {
   public async create(request: Request, response: Response): Promise<Response> {
-    try {
-      const { email } = request.body;
+    const { email } = request.body;
 
-      const authenticateUser = container.resolve(
-        SendForgotPasswordEmailService
-      );
+    const authenticateUser = container.resolve(SendForgotPasswordEmailService);
 
-      await authenticateUser.execute({
-        email,
-      });
+    await authenticateUser.execute({
+      email,
+    });
 
-      return response.status(204).json();
-    } catch (err) {
-      console.log(err);
-      return response.send();
-    }
+    return response.status(204).json();
   }
 }
 

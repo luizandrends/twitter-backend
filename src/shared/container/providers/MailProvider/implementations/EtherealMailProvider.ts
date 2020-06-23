@@ -22,9 +22,9 @@ class EtherealMailProvider implements IMailProvider {
 
   public async sendMail(to: string, body: string): Promise<void> {
     const message = await this.client.sendMail({
-      from: 'Equipe GoBarber <equipe@gobarber.com.br>',
+      from: 'Noreply Twitter <noreply@twitter.com>',
       to,
-      subject: 'Recuperação de senha',
+      subject: 'Password recovery',
       text: body,
     });
 

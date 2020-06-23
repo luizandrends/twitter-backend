@@ -1,4 +1,5 @@
 import { getRepository, Repository } from 'typeorm';
+import { uuid } from 'uuidv4';
 
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 
@@ -22,6 +23,7 @@ class UserTokensRepository implements IUserTokensRepository {
   public async generate(user_id: string): Promise<UserToken> {
     const userToken = this.ormRepository.create({
       user_id,
+      token: uuid(),
     });
 
     this.ormRepository.save(userToken);
