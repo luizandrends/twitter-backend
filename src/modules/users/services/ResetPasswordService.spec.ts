@@ -120,4 +120,29 @@ describe('ResetPasswordService', () => {
     expect(storeTokenOnBlacklist).toHaveBeenCalledWith(token_id);
     expect(updatedUser?.password).toBe('123123');
   });
+
+  it('should not be able to reset the password if the token is in the blacklist', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      username: '@johndoe',
+      password: '123456',
+    });
+
+    const { token } = await fakeUserTokensRepository.generate(user.id);
+
+    await resetPassword.execute({
+      password: '123123',
+      token,
+    });
+
+    await fakeUsersRepository.findById(user.id);
+
+    await expect(
+      resetPassword.execute({
+        password: '123123',
+        token,
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
