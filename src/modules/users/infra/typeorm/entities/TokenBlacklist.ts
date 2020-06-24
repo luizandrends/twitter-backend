@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-@Entity('user_tokens')
+@Entity('tokens_blacklist')
 class UserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string;
