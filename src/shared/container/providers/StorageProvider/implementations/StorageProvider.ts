@@ -2,7 +2,7 @@ import { Repository, getRepository } from 'typeorm';
 
 import IStorageProvider from '../models/IStorageProvider';
 
-import File from '../../infra/typeorm/entities/File';
+import File from '../infra/typeorm/entities/File';
 
 class StorageProvider implements IStorageProvider {
   private ormRepository: Repository<File>;

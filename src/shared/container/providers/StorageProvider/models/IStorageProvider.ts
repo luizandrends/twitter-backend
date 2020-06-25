@@ -1,4 +1,4 @@
-import File from '../../infra/typeorm/entities/File';
+import File from '../infra/typeorm/entities/File';
 
 export default interface IStorageProvider {
   saveFile(

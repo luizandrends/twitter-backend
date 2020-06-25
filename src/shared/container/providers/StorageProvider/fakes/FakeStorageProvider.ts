@@ -2,7 +2,7 @@ import { uuid } from 'uuidv4';
 
 import IStorageProvider from '../models/IStorageProvider';
 
-import File from '../../infra/typeorm/entities/File';
+import File from '../infra/typeorm/entities/File';
 
 class FakeStorageProvider implements IStorageProvider {
   private storage: File[] = [];
