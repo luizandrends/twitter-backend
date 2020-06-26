@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import path from 'path';
 
 import AppError from '@shared/errors/AppError';
 
@@ -31,17 +32,24 @@ class SendForgotPasswordEmailService {
 
     const { token } = await this.userTokensRepository.generate(user.id);
 
-    this.mailProvider.sendMail({
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'templates',
+      'forgot_password.hbs'
+    );
+
+    await this.mailProvider.sendMail({
       to: {
         name: user.name,
         email: user.email,
       },
       subject: '[Twitter] Password recovery',
       templateData: {
-        template: 'Hello, {{name}}: {{token}}',
+        file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          token,
+          link: `http://localhost:3000/reset?token=${token}`,
         },
       },
     });
