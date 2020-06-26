@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
 
@@ -15,7 +16,7 @@ class UpdateUserAvatarController {
       user_id: request.user.id,
     });
 
-    return response.json(avatar);
+    return response.json(classToClass(avatar));
   }
 }
 

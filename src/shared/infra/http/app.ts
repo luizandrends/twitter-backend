@@ -27,7 +27,7 @@ class App {
   private middlewares(): void {
     this.express.use(express.json());
     this.express.use(
-      '/users/avatar',
+      '/users/files',
       express.static(path.resolve(__dirname, '..', '..', '..', '..', 'tmp'))
     );
   }

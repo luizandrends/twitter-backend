@@ -7,6 +7,8 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
+import { Expose } from 'class-transformer';
+
 @Entity('files')
 class File {
   @PrimaryGeneratedColumn('uuid')
@@ -29,6 +31,11 @@ class File {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  @Expose({ name: 'file_url' })
+  get getFileUrl(): string {
+    return `http://localhost:3333/users/files/${this.path}`;
+  }
 }
 
 export default File;
