@@ -10,7 +10,6 @@ import { errors } from 'celebrate';
 
 import routes from '@shared/infra/http/routes';
 import AppError from '@shared/errors/AppError';
-import { ReplSet } from 'typeorm';
 
 class App {
   public express: express.Application;
