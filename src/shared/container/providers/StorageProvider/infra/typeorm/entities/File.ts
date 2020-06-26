@@ -19,9 +19,6 @@ class File {
   path: string;
 
   @Column()
-  url: string;
-
-  @Column()
   user_id: string;
 
   @CreateDateColumn()
