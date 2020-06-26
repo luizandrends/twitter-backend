@@ -1,13 +1,16 @@
 import 'reflect-metadata';
+
+import 'express-async-errors';
 import '@shared/infra/typeorm';
 import '@shared/container';
-import 'express-async-errors';
 
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
+import { errors } from 'celebrate';
 
 import routes from '@shared/infra/http/routes';
 import AppError from '@shared/errors/AppError';
+import { ReplSet } from 'typeorm';
 
 class App {
   public express: express.Application;
@@ -17,6 +20,7 @@ class App {
 
     this.middlewares();
     this.routes();
+    this.validationErrors();
     this.handleError();
   }
 
@@ -32,6 +36,10 @@ class App {
     this.express.use(routes);
   }
 
+  private validationErrors(): void {
+    this.express.use(errors());
+  }
+
   private handleError(): void {
     this.express.use(
       (err: Error, request: Request, response: Response, _: NextFunction) => {
@@ -41,6 +49,8 @@ class App {
             message: err.message,
           });
         }
+
+        console.error(err);
 
         return response.status(500).json({
           status: 'error',

@@ -34,8 +34,12 @@ class CreateUserService {
       username
     );
 
-    if (checkEmailExists || checkUsernameExists) {
-      throw new AppError('Username or email already exists');
+    if (checkUsernameExists) {
+      throw new AppError('Username or email already exists', 400);
+    }
+
+    if (checkEmailExists) {
+      throw new AppError('Username or email already exists', 400);
     }
 
     const hashedPassword = await this.hashProvider.generateHash(password);
