@@ -38,7 +38,7 @@ describe('CreateUser', () => {
       createUser.execute({
         name: 'John Doe',
         email: 'johndoe@example.com',
-        username: '@johndoe',
+        username: '@anotherusername',
         password: '1234',
       })
     ).rejects.toBeInstanceOf(AppError);
