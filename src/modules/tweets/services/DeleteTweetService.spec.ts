@@ -2,6 +2,7 @@ import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepo
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 import CreateUserService from '@modules/users/services/CreateUserService';
 
+import AppError from '@shared/errors/AppError';
 import FakeTweetRepository from '../repositories/fakes/FakeTweetRepository';
 import CreateTweetService from './CreateTweetService';
 import DeleteTweetService from './DeleteTweetService';
@@ -28,7 +29,7 @@ describe('CreateTweet', () => {
     deleteTweetService = new DeleteTweetService(fakeTweetRepository);
   });
 
-  it('should be able to delete an tweet', async () => {
+  it('should be able to delete a valid tweet', async () => {
     const user = await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -46,5 +47,25 @@ describe('CreateTweet', () => {
     });
 
     expect(tweet).toHaveProperty('deleted_at');
+  });
+
+  it('should not be able to delete a tweet with an invalid id', async () => {
+    const user = await createUser.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      username: '@johndoe',
+      password: '1234',
+    });
+
+    await createTweetService.execute({
+      content: 'Hi, my name is John Doe',
+      user_id: user.id,
+    });
+
+    await expect(
+      deleteTweetService.execute({
+        tweet_id: 'invalid-tweet-id',
+      })
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
