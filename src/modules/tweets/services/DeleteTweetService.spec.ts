@@ -50,7 +50,7 @@ describe('CreateTweet', () => {
     expect(tweet).toHaveProperty('deleted_at');
   });
 
-  it('should not be able to delete a tweet with an invalid id', async () => {
+  it('should not be able to delete a tweet with an invalid tweet id', async () => {
     const user = await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -67,6 +67,27 @@ describe('CreateTweet', () => {
       deleteTweetService.execute({
         tweet_id: 'invalid-tweet-id',
         user_id: user.id,
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to delete a tweet from other user id', async () => {
+    const user = await createUser.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      username: '@johndoe',
+      password: '1234',
+    });
+
+    const tweet = await createTweetService.execute({
+      content: 'Hi, my name is John Doe',
+      user_id: user.id,
+    });
+
+    await expect(
+      deleteTweetService.execute({
+        tweet_id: tweet.id,
+        user_id: 'id-from-another-user',
       })
     ).rejects.toBeInstanceOf(AppError);
   });
