@@ -12,6 +12,14 @@ class TweetsRepository implements ITweetsRepository {
     this.ormRepository = getRepository(Tweet);
   }
 
+  public async findById(tweet_id: string): Promise<Tweet | undefined> {
+    const tweet = await this.ormRepository.findOne({
+      where: { id: tweet_id },
+    });
+
+    return tweet;
+  }
+
   public async findByContent(content: string): Promise<Tweet | undefined> {
     const tweet = await this.ormRepository.findOne({
       where: { content },
