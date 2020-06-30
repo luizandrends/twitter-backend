@@ -10,7 +10,7 @@ import IUserTokens from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepositories from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
 // import ITweetsRepository from '@modules/tweets/repositories/ITweetsRepository';
-// import TweetsRepository from '@modules/tweets/infra/typeorm/repositories/TweetsRepository';
+// import TweetsRepository from '@modules/tweets/repositories/fakes/FakeTweetRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
