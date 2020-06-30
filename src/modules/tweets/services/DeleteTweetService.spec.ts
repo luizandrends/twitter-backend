@@ -29,7 +29,7 @@ describe('CreateTweet', () => {
     deleteTweetService = new DeleteTweetService(fakeTweetRepository);
   });
 
-  it('should be able to delete a valid tweet', async () => {
+  it('should be able to delete my onw tweets', async () => {
     const user = await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -44,6 +44,7 @@ describe('CreateTweet', () => {
 
     await deleteTweetService.execute({
       tweet_id: tweet.id,
+      user_id: user.id,
     });
 
     expect(tweet).toHaveProperty('deleted_at');
@@ -65,6 +66,7 @@ describe('CreateTweet', () => {
     await expect(
       deleteTweetService.execute({
         tweet_id: 'invalid-tweet-id',
+        user_id: user.id,
       })
     ).rejects.toBeInstanceOf(AppError);
   });
