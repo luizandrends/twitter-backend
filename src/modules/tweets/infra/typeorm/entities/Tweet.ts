@@ -16,6 +16,9 @@ class Tweets {
   content: string;
 
   @Column()
+  replied: boolean;
+
+  @Column()
   user_id: string;
 
   @CreateDateColumn()
