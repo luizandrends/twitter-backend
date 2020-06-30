@@ -14,13 +14,13 @@ class TweetsRepository implements ITweetsRepository {
 
   public async findByContent(content: string): Promise<Tweet | undefined> {
     const tweet = await this.ormRepository.findOne({
-      where: content,
+      where: { content },
     });
 
     return tweet;
   }
 
-  public async create({ user_id, content }: ITweetsDTO): Promise<Tweet> {
+  public async create({ content, user_id }: ITweetsDTO): Promise<Tweet> {
     const tweet = await this.ormRepository.create({
       content,
       user_id,
