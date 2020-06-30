@@ -7,8 +7,8 @@ import Tweet from '../../infra/typeorm/entities/Tweet';
 class FakeTweetRepository implements ITweetsRepository {
   private tweets: Tweet[] = [];
 
-  public async findById(tweet_id: string): Promise<Tweet | undefined> {
-    const findTweet = this.tweets.find(t => t.id === tweet_id);
+  public async findByContent(content: string): Promise<Tweet | undefined> {
+    const findTweet = this.tweets.find(t => t.content === content);
 
     return findTweet;
   }
