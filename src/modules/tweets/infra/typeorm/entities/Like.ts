@@ -15,6 +15,9 @@ class Tweets {
   @Column()
   tweet_id: string;
 
+  @Column()
+  user_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 
