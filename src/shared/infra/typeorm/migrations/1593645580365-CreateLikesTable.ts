@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateTweetsTable1593479228777
+export default class CreateLikesTable1593645580365
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'tweets',
+        name: 'likes',
         columns: [
           {
             name: 'id',
@@ -15,17 +15,12 @@ export default class CreateTweetsTable1593479228777
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'content',
-            type: 'varchar',
+            name: 'tweet_id',
+            type: 'uuid',
           },
           {
             name: 'user_id',
             type: 'uuid',
-          },
-          {
-            name: 'replied',
-            type: 'boolean',
-            default: false,
           },
           {
             name: 'created_at',
@@ -37,19 +32,21 @@ export default class CreateTweetsTable1593479228777
             type: 'timestamp',
             default: 'now()',
           },
-          {
-            name: 'deleted_at',
-            type: 'timestamp',
-            isNullable: true,
-            default: null,
-          },
         ],
         foreignKeys: [
           {
-            name: 'TweetUser',
+            name: 'UserLike',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             columnNames: ['user_id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'TweetLike',
+            referencedTableName: 'tweets',
+            referencedColumnNames: ['id'],
+            columnNames: ['tweet_id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -59,6 +56,6 @@ export default class CreateTweetsTable1593479228777
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('tweets');
+    await queryRunner.dropTable('likes');
   }
 }
