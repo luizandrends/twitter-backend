@@ -1,15 +1,15 @@
 import AppError from '@shared/errors/AppError';
-import FakeTweetRepository from '../repositories/fakes/FakeTweetRepository';
+import FakeTweetsRepository from '../repositories/fakes/FakeTweetsRepository';
 import CreateTweetService from './CreateTweetService';
 
 let createTweetService: CreateTweetService;
-let fakeTweetRepository: FakeTweetRepository;
+let fakeTweetsRepository: FakeTweetsRepository;
 
 describe('CreateTweet', () => {
   beforeEach(() => {
-    fakeTweetRepository = new FakeTweetRepository();
+    fakeTweetsRepository = new FakeTweetsRepository();
 
-    createTweetService = new CreateTweetService(fakeTweetRepository);
+    createTweetService = new CreateTweetService(fakeTweetsRepository);
   });
 
   it('should be able to create a new tweet', async () => {

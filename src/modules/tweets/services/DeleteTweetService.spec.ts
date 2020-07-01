@@ -3,7 +3,7 @@ import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHa
 import CreateUserService from '@modules/users/services/CreateUserService';
 
 import AppError from '@shared/errors/AppError';
-import FakeTweetRepository from '../repositories/fakes/FakeTweetRepository';
+import FakeTweetsRepository from '../repositories/fakes/FakeTweetsRepository';
 import CreateTweetService from './CreateTweetService';
 import DeleteTweetService from './DeleteTweetService';
 
@@ -12,7 +12,7 @@ let fakeHashProvider: FakeHashProvider;
 let createUser: CreateUserService;
 
 let createTweetService: CreateTweetService;
-let fakeTweetRepository: FakeTweetRepository;
+let fakeTweetsRepository: FakeTweetsRepository;
 
 let deleteTweetService: DeleteTweetService;
 
@@ -21,12 +21,12 @@ describe('CreateTweet', () => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
 
-    fakeTweetRepository = new FakeTweetRepository();
+    fakeTweetsRepository = new FakeTweetsRepository();
 
-    createTweetService = new CreateTweetService(fakeTweetRepository);
+    createTweetService = new CreateTweetService(fakeTweetsRepository);
     createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
 
-    deleteTweetService = new DeleteTweetService(fakeTweetRepository);
+    deleteTweetService = new DeleteTweetService(fakeTweetsRepository);
   });
 
   it('should be able to delete my onw tweets', async () => {
