@@ -16,8 +16,8 @@ class FakeLikesRepository implements ILikesRepository {
     return like;
   }
 
-  public async delete(tweet_id: string): Promise<void> {
-    const findIndex = this.likes.findIndex(l => l.tweet_id === tweet_id);
+  public async delete(like_id: string): Promise<void> {
+    const findIndex = this.likes.findIndex(l => l.id === like_id);
 
     this.likes.splice(findIndex);
   }
