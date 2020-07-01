@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import FakeTweetRepository from '../repositories/fakes/FakeTweetsRepository';
 import CreateTweetService from './CreateTweetService';
 import FakeLikesRepository from '../repositories/fakes/FakeLikesRepository';
@@ -50,5 +51,14 @@ describe('CreateLike', () => {
     });
 
     expect(deleteLike).toHaveBeenCalledWith(like.id);
+  });
+
+  it('should not be able to delete a like from an unexistent tweet', async () => {
+    await expect(
+      deleteLikeService.execute({
+        like_id: 'like-id',
+        tweet_id: 'non-existing-tweet',
+      })
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
