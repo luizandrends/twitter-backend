@@ -35,7 +35,8 @@ export default class CreateLikesTable1593645580365
           {
             name: 'deleted_at',
             type: 'timestamp',
-            default: 'now()',
+            isNullable: true,
+            default: null,
           },
         ],
         foreignKeys: [

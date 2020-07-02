@@ -50,12 +50,14 @@ class FakeLikesRepository implements ILikesRepository {
       where: { tweet_id, user_id },
     });
 
+    console.log(findLike);
+
     return findLike;
   }
 
   public async findLike(like_id: string): Promise<Like | undefined> {
     const findLike = await this.ormRepository.findOne({
-      where: { like_id },
+      where: { id: like_id },
     });
 
     return findLike;

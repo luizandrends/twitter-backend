@@ -24,7 +24,7 @@ likeRouter.get(
 );
 
 likeRouter.delete(
-  '/count/:tweet_id',
+  '/delete/:like_id',
   ensureAuthenticated,
   deleteLikeController.delete
 );

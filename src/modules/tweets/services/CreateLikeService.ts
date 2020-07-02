@@ -28,7 +28,7 @@ class CreateLikeService {
       throw new AppError('Tweet not found', 400);
     }
 
-    const findLike = await this.likesRepository.hasLike(tweet_id, user_id);
+    const findLike = this.likesRepository.hasLike(tweet_id, user_id);
 
     if (findLike) {
       throw new AppError('You cannot like a tweet twice', 400);
