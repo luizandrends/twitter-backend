@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import FakeTweetsRepository from '../repositories/fakes/FakeTweetsRepository';
 import CreateTweetService from './CreateTweetService';
 import FakeLikesRepository from '../repositories/fakes/FakeLikesRepository';
@@ -50,5 +51,13 @@ describe('CreateLike', () => {
 
     expect(countLikes).toBe(1);
     expect(countLikesSpy).toHaveBeenCalledWith(tweet.id);
+  });
+
+  it('should not be able to count the likes of a unexistent tweet', async () => {
+    await expect(
+      countLikeService.execute({
+        tweet_id: 'non-existing tweet',
+      })
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
