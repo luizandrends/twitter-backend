@@ -57,6 +57,12 @@ class FakeLikesRepository implements ILikesRepository {
 
     return findLike;
   }
+
+  public async findLike(like_id: string): Promise<Like | undefined> {
+    const findLike = this.likes.find(l => l.id === like_id);
+
+    return findLike;
+  }
 }
 
 export default FakeLikesRepository;
