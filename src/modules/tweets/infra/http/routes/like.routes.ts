@@ -7,6 +7,10 @@ const createLikeController = new CreateLikeController();
 
 const likeRouter = Router();
 
-likeRouter.post('/create', ensureAuthenticated, createLikeController.create);
+likeRouter.post(
+  '/create/:tweet_id',
+  ensureAuthenticated,
+  createLikeController.create
+);
 
 export default likeRouter;
