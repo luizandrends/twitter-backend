@@ -50,8 +50,6 @@ class FakeLikesRepository implements ILikesRepository {
       where: { tweet_id, user_id },
     });
 
-    console.log(findLike);
-
     return findLike;
   }
 
