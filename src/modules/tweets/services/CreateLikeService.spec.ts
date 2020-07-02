@@ -46,4 +46,23 @@ describe('CreateLike', () => {
       })
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to create a like in the same tweet twice', async () => {
+    const tweet = await createTweetService.execute({
+      content: 'Hi, my name is John Doe',
+      user_id: '18f4ac8b-82d9-4f15-a187-86efce8b7269',
+    });
+
+    await createLikeService.execute({
+      tweet_id: tweet.id,
+      user_id: '18f4ac8b-82d9-4f15-a187-86efce8b7269',
+    });
+
+    await expect(
+      createLikeService.execute({
+        tweet_id: tweet.id,
+        user_id: '18f4ac8b-82d9-4f15-a187-86efce8b7269',
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });

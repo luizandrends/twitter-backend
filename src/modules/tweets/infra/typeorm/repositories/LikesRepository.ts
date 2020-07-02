@@ -41,6 +41,17 @@ class FakeLikesRepository implements ILikesRepository {
   public async delete(like_id: string): Promise<void> {
     await this.ormRepository.delete(like_id);
   }
+
+  public async hasLike(
+    tweet_id: string,
+    user_id: string
+  ): Promise<Like | undefined> {
+    const findLike = await this.ormRepository.findOne({
+      where: { tweet_id, user_id },
+    });
+
+    return findLike;
+  }
 }
 
 export default FakeLikesRepository;

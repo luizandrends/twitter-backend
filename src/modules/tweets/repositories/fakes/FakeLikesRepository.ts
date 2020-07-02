@@ -46,6 +46,17 @@ class FakeLikesRepository implements ILikesRepository {
 
     this.likes.splice(findIndex);
   }
+
+  public async hasLike(
+    tweet_id: string,
+    user_id: string
+  ): Promise<Like | undefined> {
+    const findLike = this.likes.find(
+      l => l.tweet_id === tweet_id && l.user_id === user_id
+    );
+
+    return findLike;
+  }
 }
 
 export default FakeLikesRepository;
