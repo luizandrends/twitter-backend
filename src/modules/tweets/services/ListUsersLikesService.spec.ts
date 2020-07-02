@@ -1,9 +1,16 @@
 import AppError from '@shared/errors/AppError';
+import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
+import CreateUserService from '@modules/users/services/CreateUserService';
 import FakeTweetsRepository from '../repositories/fakes/FakeTweetsRepository';
-import CreateTweetService from './CreateTweetService';
 import FakeLikesRepository from '../repositories/fakes/FakeLikesRepository';
 import ListUsersLikesService from './ListUsersLikesService';
 import CreateLikeService from './CreateLikeService';
+import CreateTweetService from './CreateTweetService';
+
+let fakeUsersRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let createUser: CreateUserService;
 
 let createTweetService: CreateTweetService;
 let fakeTweetsRepository: FakeTweetsRepository;
@@ -15,6 +22,11 @@ let createLikeService: CreateLikeService;
 
 describe('CreateLike', () => {
   beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeHashProvider = new FakeHashProvider();
+
+    createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+
     fakeTweetsRepository = new FakeTweetsRepository();
 
     createTweetService = new CreateTweetService(fakeTweetsRepository);
@@ -33,16 +45,21 @@ describe('CreateLike', () => {
   });
 
   it('should be able to list the list of users who liked a tweet', async () => {
-    const listUsersLike = jest.spyOn(fakeLikesRepository, 'listUsers');
-
-    const tweet = await createTweetService.execute({
-      content: 'Hi, my name is John Doe',
-      user_id: '18f4ac8b-82d9-4f15-a187-86efce8b7269',
+    const user = await createUser.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      username: '@johndoe',
+      password: '1234',
     });
 
-    await createLikeService.execute({
+    const tweet = await createTweetService.execute({
+      user_id: user.id,
+      content: 'Hy, my name is John Doe',
+    });
+
+    const like = await createLikeService.execute({
       tweet_id: tweet.id,
-      user_id: '18f4ac8b-82d9-4f15-a187-86efce8b7269',
+      user_id: user.id,
     });
 
     const listUsers = await listUserLikesService.execute({
@@ -51,13 +68,11 @@ describe('CreateLike', () => {
 
     expect(listUsers).toEqual([
       {
-        id: '18f4ac8b-82d9-4f15-a187-86efce8b7269',
-        name: 'John Doe',
-        password: '123',
-        username: '@johndoe',
+        id: like.id,
+        tweet_id: tweet.id,
+        user_id: user.id,
       },
     ]);
-    expect(listUsersLike).toHaveBeenCalledWith(tweet.id);
   });
 
   it('should not be able to list the users from an unexistent tweet', async () => {

@@ -21,7 +21,7 @@ class FakeLikesRepository implements ILikesRepository {
       id: user_id,
       name: 'John Doe',
       username: '@johndoe',
-      password: '123',
+      password: '123456',
     });
 
     this.users.push(user);
@@ -33,8 +33,14 @@ class FakeLikesRepository implements ILikesRepository {
     return this.likes.length;
   }
 
-  public async listUsers(tweet_id: string): Promise<User[]> {
-    return this.users;
+  public async listUsers(tweet_id: string): Promise<Like[]> {
+    const likes = this.likes.filter(l => {
+      return l.tweet_id === tweet_id && l.user_id;
+    });
+
+    console.log('likes', likes);
+
+    return likes;
   }
 
   public async delete(like_id: string): Promise<void> {
