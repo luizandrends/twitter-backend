@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ListUsersLikesService from '@modules/tweets/services/ListUsersLikesService';
 
@@ -13,7 +14,7 @@ class ListUserLikesController {
       tweet_id,
     });
 
-    return response.json(like);
+    return response.json(classToClass(like));
   }
 }
 
