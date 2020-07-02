@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
+import User from '@modules/users/infra/typeorm/entities/User';
 import ITweetsRepository from '../repositories/ITweetsRepository';
 import ILikesRepository from '../repositories/ILikesRepository';
 
@@ -10,7 +11,7 @@ interface IRequest {
 }
 
 @injectable()
-class CountLikeService {
+class ListUsersLikesService {
   constructor(
     @inject('LikesRepository')
     private likesRepository: ILikesRepository,
@@ -19,17 +20,17 @@ class CountLikeService {
     private tweetsRepository: ITweetsRepository
   ) {}
 
-  public async execute({ tweet_id }: IRequest): Promise<number> {
+  public async execute({ tweet_id }: IRequest): Promise<User[]> {
     const findTweet = await this.tweetsRepository.findById(tweet_id);
 
     if (!findTweet) {
       throw new AppError('Tweet not found', 400);
     }
 
-    const like = await this.likesRepository.countLikes(tweet_id);
+    const userList = await this.likesRepository.listUsers(tweet_id);
 
-    return like;
+    return userList;
   }
 }
 
-export default CountLikeService;
+export default ListUsersLikesService;
