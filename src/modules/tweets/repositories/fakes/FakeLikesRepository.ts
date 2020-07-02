@@ -41,10 +41,10 @@ class FakeLikesRepository implements ILikesRepository {
     return likes;
   }
 
-  public async delete(like_id: string): Promise<void> {
-    const findIndex = this.likes.findIndex(l => l.id === like_id);
+  public async save(like: Like): Promise<void> {
+    const findIndex = this.likes.findIndex(l => l.id === like.id);
 
-    this.likes.splice(findIndex);
+    this.likes[findIndex] = like;
   }
 
   public async hasLike(

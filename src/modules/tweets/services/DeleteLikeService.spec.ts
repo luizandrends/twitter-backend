@@ -26,15 +26,10 @@ describe('CreateLike', () => {
       fakeTweetRepository
     );
 
-    deleteLikeService = new DeleteLikeService(
-      fakeLikesRepository,
-      fakeTweetRepository
-    );
+    deleteLikeService = new DeleteLikeService(fakeLikesRepository);
   });
 
   it('should be able to delete a like', async () => {
-    const deleteLike = jest.spyOn(fakeLikesRepository, 'delete');
-
     const tweet = await createTweetService.execute({
       content: 'Hi, my name is John Doe',
       user_id: '18f4ac8b-82d9-4f15-a187-86efce8b7269',
@@ -47,17 +42,15 @@ describe('CreateLike', () => {
 
     await deleteLikeService.execute({
       like_id: like.id,
-      tweet_id: tweet.id,
     });
 
-    expect(deleteLike).toHaveBeenCalledWith(like.id);
+    expect(like.deleted_at).toBe(like.deleted_at);
   });
 
   it('should not be able to delete a like from an unexistent tweet', async () => {
     await expect(
       deleteLikeService.execute({
         like_id: 'like-id',
-        tweet_id: 'non-existing-tweet',
       })
     ).rejects.toBeInstanceOf(AppError);
   });

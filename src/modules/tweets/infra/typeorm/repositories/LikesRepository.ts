@@ -38,8 +38,8 @@ class FakeLikesRepository implements ILikesRepository {
     return userList;
   }
 
-  public async delete(like_id: string): Promise<void> {
-    await this.ormRepository.delete(like_id);
+  public async save(like: Like): Promise<void> {
+    await this.ormRepository.save(like);
   }
 
   public async hasLike(
