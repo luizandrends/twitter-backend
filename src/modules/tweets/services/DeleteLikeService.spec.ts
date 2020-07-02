@@ -47,7 +47,7 @@ describe('CreateLike', () => {
     expect(like.deleted_at).toBe(like.deleted_at);
   });
 
-  it('should not be able to delete a like from an unexistent tweet', async () => {
+  it('should not be able to unlike an unexistent like', async () => {
     await expect(
       deleteLikeService.execute({
         like_id: 'like-id',

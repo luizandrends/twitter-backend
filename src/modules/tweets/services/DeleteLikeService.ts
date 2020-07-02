@@ -18,11 +18,8 @@ class DeletLikeService {
   public async execute({ like_id }: IRequest): Promise<void> {
     const like = await this.likesRepository.findLike(like_id);
 
-    if (!like?.tweet_id) {
-      throw new AppError(
-        'You cannot delete a like from an unexistent tweet',
-        401
-      );
+    if (!like) {
+      throw new AppError('You cannot unlike an unexistent like', 401);
     }
 
     like.deleted_at = new Date();
