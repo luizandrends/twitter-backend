@@ -2,9 +2,10 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import User from '@modules/users/infra/typeorm/entities/User';
 import ITweetsRepository from '../repositories/ITweetsRepository';
 import ILikesRepository from '../repositories/ILikesRepository';
+
+import Like from '../infra/typeorm/entities/Like';
 
 interface IRequest {
   tweet_id: string;
@@ -20,7 +21,7 @@ class ListUsersLikesService {
     private tweetsRepository: ITweetsRepository
   ) {}
 
-  public async execute({ tweet_id }: IRequest): Promise<User[]> {
+  public async execute({ tweet_id }: IRequest): Promise<Like[]> {
     const findTweet = await this.tweetsRepository.findById(tweet_id);
 
     if (!findTweet) {
