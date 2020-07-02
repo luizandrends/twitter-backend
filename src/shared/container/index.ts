@@ -12,6 +12,9 @@ import UserTokensRepositories from '@modules/users/infra/typeorm/repositories/Us
 import ITweetsRepository from '@modules/tweets/repositories/ITweetsRepository';
 import TweetsRepository from '@modules/tweets/infra/typeorm/repositories/TweetsRepository';
 
+import ILikesRepository from '@modules/tweets/repositories/ILikesRepository';
+import LikesRepository from '@modules/tweets/infra/typeorm/repositories/LikesRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository
@@ -25,4 +28,9 @@ container.registerSingleton<IUserTokens>(
 container.registerSingleton<ITweetsRepository>(
   'TweetsRepository',
   TweetsRepository
+);
+
+container.registerSingleton<ILikesRepository>(
+  'LikesRepository',
+  LikesRepository
 );

@@ -1,4 +1,3 @@
-import User from '@modules/users/infra/typeorm/entities/User';
 import Like from '../infra/typeorm/entities/Like';
 
 export default interface ILikesRepository {
