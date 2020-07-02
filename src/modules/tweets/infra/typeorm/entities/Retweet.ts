@@ -7,22 +7,16 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('tweets')
-class Tweets {
+@Entity('retweets')
+class Retweet {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  content: string;
-
-  @Column()
-  replied: boolean;
 
   @Column()
   user_id: string;
 
   @Column()
-  is_retweet: boolean;
+  tweet_id: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -34,4 +28,4 @@ class Tweets {
   deleted_at: Date;
 }
 
-export default Tweets;
+export default Retweet;
