@@ -38,8 +38,6 @@ class FakeLikesRepository implements ILikesRepository {
       return l.tweet_id === tweet_id && l.user_id;
     });
 
-    console.log('likes', likes);
-
     return likes;
   }
 

@@ -1,6 +1,5 @@
 import { Repository, getRepository } from 'typeorm';
 
-import User from '@modules/users/infra/typeorm/entities/User';
 import ILikesRepository from '@modules/tweets/repositories/ILikesRepository';
 import Like from '../entities/Like';
 
@@ -39,7 +38,9 @@ class FakeLikesRepository implements ILikesRepository {
     return userList;
   }
 
-  public async delete(like_id: string): Promise<void> {}
+  public async delete(like_id: string): Promise<void> {
+    await this.ormRepository.delete(like_id);
+  }
 }
 
 export default FakeLikesRepository;
