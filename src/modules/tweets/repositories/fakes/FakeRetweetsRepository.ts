@@ -52,8 +52,6 @@ class FakeRetweetsRepository implements IRetweetsRepository {
     tweet_id: string,
     user_id: string
   ): Promise<Retweet | undefined> {
-    console.log('asdas', tweet_id, user_id);
-
     const findRetweet = this.retweets.find(
       r => r.tweet_id === tweet_id && r.user_id === user_id
     );
